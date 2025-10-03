@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>English Verb Tenses Quiz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        h1, h2 {
+            text-align: center;
+        }
+        #description {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        #quiz-container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        #options {
+            margin: 20px 0;
+        }
+        label {
+            display: block;
+            margin: 10px 0;
+            cursor: pointer;
+        }
+        button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        #feedback {
+            margin: 20px 0;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .correct {
+            background: #d4edda;
+            color: #155724;
+        }
+        .incorrect {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        #results {
+            text-align: center;
+            font-size: 1.2em;
+            margin-top: 20px;
+        }
+        #start-btn {
+            margin: 20px auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>English Verb Tenses Quiz</h1>
+    <p id="description">This quiz tests knowledge of the 12 English verb tenses as explained in the provided video transcript for Spanish-speaking learners.</p>
+    <button id="start-btn">Start Quiz</button>
+    <div id="quiz-container" style="display: none;">
+        <h2 id="question"></h2>
+        <div id="options"></div>
+        <button id="submit-btn">Submit Answer</button>
+        <div id="feedback"></div>
+        <button id="next-btn" style="display: none;">Next Question</button>
+    </div>
+    <div id="results" style="display: none;"></div>
+
+    <script>
+        const quizData = {
+  "quiz_title": "English Verb Tenses Quiz Based on Video Lesson",
+  "description": "This quiz tests knowledge of the 12 English verb tenses as explained in the provided video transcript for Spanish-speaking learners.",
+  "questions": [
+    {
+      "question": "According to the lesson, how many verb tenses in English are covered?",
+      "options": [
+        "A. 8",
+        "B. 10",
+        "C. 12",
+        "D. 14"
+      ],
+      "correct": "C",
+      "explanation": "The lesson explicitly states it covers the 12 verb tenses in English."
+    },
+    {
+      "question": "The lesson is divided into how many sections, each covering four tenses?",
+      "options": [
+        "A. 2 sections",
+        "B. 3 sections",
+        "C. 4 sections",
+        "D. 5 sections"
+      ],
+      "correct": "B",
+      "explanation": "There are three sections: present, past, and future, each with four tenses."
+    },
+    {
+      "question": "What is the present simple tense used for?",
+      "options": [
+        "A. Actions happening right now",
+        "B. Habitual actions, general facts, or things that are always true",
+        "C. Actions that started in the past and continue to the present",
+        "D. Future plans"
+      ],
+      "correct": "B",
+      "explanation": "The transcript says it's for habitual actions, general facts, or things that are always true, plus expressing likes, preferences, and opinions."
+    },
+    {
+      "question": "In the present simple, for third person singular (he/she/it), what do you add to the base verb?",
+      "options": [
+        "A. -ing",
+        "B. -ed",
+        "C. -s or -es",
+        "D. Nothing"
+      ],
+      "correct": "C",
+      "explanation": "The lesson explains that for he/she/it, you add -s or -es to the verb."
+    },
+    {
+      "question": "Which auxiliary verb is used in present simple negatives for I/you/we/they?",
+      "options": [
+        "A. Does",
+        "B. Do",
+        "C. Did",
+        "D. Will"
+      ],
+      "correct": "B",
+      "explanation": "Do is used for I/you/we/they in negatives, as per the examples like 'I do not play'."
+    },
+    {
+      "question": "What is the present continuous tense primarily used for?",
+      "options": [
+        "A. Completed actions with present relevance",
+        "B. Actions happening right now or future plans already decided",
+        "C. General facts",
+        "D. Past experiences"
+      ],
+      "correct": "B",
+      "explanation": "It's for actions happening at the moment or future plans already decided."
+    },
+    {
+      "question": "The formula for present continuous affirmative is: subject + _____ + verb-ing.",
+      "options": [
+        "A. Have/has",
+        "B. To be (am/is/are)",
+        "C. Will",
+        "D. Had"
+      ],
+      "correct": "B",
+      "explanation": "Subject + to be (am/is/are) + verb-ing."
+    },
+    {
+      "question": "To form a question in present continuous, what do you do?",
+      "options": [
+        "A. Add 'not' after the verb",
+        "B. Invert the order of 'to be' and the subject",
+        "C. Add -s to the verb",
+        "D. Use 'did' at the beginning"
+      ],
+      "correct": "B",
+      "explanation": "Invert the order of the verb 'to be' and the subject, e.g., 'Is she playing?'"
+    },
+    {
+      "question": "What does the present perfect tense describe?",
+      "options": [
+        "A. Actions in progress now",
+        "B. Actions that occurred in the past with relevance to the present, or life experiences",
+        "C. Future predictions",
+        "D. Habitual actions"
+      ],
+      "correct": "B",
+      "explanation": "Actions from the past with present relevance, experiences, achievements, or changes."
+    },
+    {
+      "question": "In present perfect, which auxiliary is used with he/she/it?",
+      "options": [
+        "A. Have",
+        "B. Has",
+        "C. Had",
+        "D. Will have"
+      ],
+      "correct": "B",
+      "explanation": "Has for he/she/it, have for others."
+    },
+    {
+      "question": "The present perfect continuous emphasizes what?",
+      "options": [
+        "A. Completed actions",
+        "B. Duration of actions that started in the past and continue to the present",
+        "C. General truths",
+        "D. Spontaneous decisions"
+      ],
+      "correct": "B",
+      "explanation": "Actions that began in the past and continue, emphasizing duration."
+    },
+    {
+      "question": "Formula for present perfect continuous: subject + have/has + _____ + verb-ing.",
+      "options": [
+        "A. Been",
+        "B. Be",
+        "C. Being",
+        "D. Was/were"
+      ],
+      "correct": "A",
+      "explanation": "Subject + have/has + been + verb-ing."
+    },
+    {
+      "question": "Past simple is used for what?",
+      "options": [
+        "A. Actions in progress in the past",
+        "B. Actions that occurred in the past at a specific time without direct present relation",
+        "C. Future actions",
+        "D. Present habits"
+      ],
+      "correct": "B",
+      "explanation": "Actions in the past at a specific moment without direct present connection."
+    },
+    {
+      "question": "For regular verbs in past simple, add what to the base form?",
+      "options": [
+        "A. -ing",
+        "B. -ed or -d",
+        "C. -s",
+        "D. Nothing"
+      ],
+      "correct": "B",
+      "explanation": "-ed or -d for regular verbs."
+    },
+    {
+      "question": "In past simple negatives, use _____ + not + base verb.",
+      "options": [
+        "A. Do/does",
+        "B. Did",
+        "C. Will",
+        "D. Have"
+      ],
+      "correct": "B",
+      "explanation": "Did not + base verb."
+    },
+    {
+      "question": "Past continuous describes:",
+      "options": [
+        "A. Completed past actions before another past action",
+        "B. Actions in progress at a specific past moment or simultaneous actions",
+        "C. Future plans",
+        "D. Present relevance"
+      ],
+      "correct": "B",
+      "explanation": "Actions in progress in the past or simultaneous past actions."
+    },
+    {
+      "question": "Formula for past continuous: subject + was/were + _____.",
+      "options": [
+        "A. Verb base",
+        "B. Verb-ing",
+        "C. Past participle",
+        "D. Been + verb-ing"
+      ],
+      "correct": "B",
+      "explanation": "Subject + was/were + verb-ing."
+    },
+    {
+      "question": "Past perfect is for:",
+      "options": [
+        "A. Actions before another past action",
+        "B. Future completions",
+        "C. Present habits",
+        "D. Continuous future"
+      ],
+      "correct": "A",
+      "explanation": "An action that occurred before another in the past."
+    },
+    {
+      "question": "In past perfect, use: subject + _____ + past participle.",
+      "options": [
+        "A. Have/has",
+        "B. Had",
+        "C. Will have",
+        "D. Was/were"
+      ],
+      "correct": "B",
+      "explanation": "Subject + had + past participle."
+    },
+    {
+      "question": "Past perfect continuous emphasizes:",
+      "options": [
+        "A. Duration of an action in progress before another past action",
+        "B. Simple past facts",
+        "C. Future predictions",
+        "D. Present experiences"
+      ],
+      "correct": "A",
+      "explanation": "Action in progress before another past action, emphasizing duration."
+    },
+    {
+      "question": "Formula for past perfect continuous: subject + had + been + _____.",
+      "options": [
+        "A. Past participle",
+        "B. Verb base",
+        "C. Verb-ing",
+        "D. Verb-ed"
+      ],
+      "correct": "C",
+      "explanation": "Subject + had + been + verb-ing."
+    },
+    {
+      "question": "Future simple is used for:",
+      "options": [
+        "A. Past actions",
+        "B. Future actions, predictions, or spontaneous decisions",
+        "C. Present continuous actions",
+        "D. Past experiences"
+      ],
+      "correct": "B",
+      "explanation": "Actions in the future, predictions, or spontaneous decisions."
+    },
+    {
+      "question": "Formula for future simple: subject + _____ + base verb.",
+      "options": [
+        "A. Had",
+        "B. Have/has",
+        "C. Will",
+        "D. Was/were"
+      ],
+      "correct": "C",
+      "explanation": "Subject + will + base verb."
+    },
+    {
+      "question": "Future continuous describes:",
+      "options": [
+        "A. Completed future actions",
+        "B. Actions in progress at a specific future moment",
+        "C. Past durations",
+        "D. Present facts"
+      ],
+      "correct": "B",
+      "explanation": "Action in process at a specific future time."
+    },
+    {
+      "question": "In future continuous, use: subject + will be + _____.",
+      "options": [
+        "A. Past participle",
+        "B. Verb-ing",
+        "C. Base verb",
+        "D. Been + verb-ing"
+      ],
+      "correct": "B",
+      "explanation": "Subject + will be + verb-ing."
+    },
+    {
+      "question": "Future perfect is for:",
+      "options": [
+        "A. Actions completed before a specific future moment",
+        "B. Continuous past",
+        "C. Present habits",
+        "D. Simple future"
+      ],
+      "correct": "A",
+      "explanation": "Action completed before a specific future time."
+    },
+    {
+      "question": "Formula for future perfect: subject + will have + _____.",
+      "options": [
+        "A. Verb-ing",
+        "B. Base verb",
+        "C. Past participle",
+        "D. Been + verb-ing"
+      ],
+      "correct": "C",
+      "explanation": "Subject + will have + past participle."
+    },
+    {
+      "question": "Future perfect continuous emphasizes:",
+      "options": [
+        "A. Duration of an action in progress until a specific future moment",
+        "B. Simple past actions",
+        "C. Present predictions",
+        "D. General facts"
+      ],
+      "correct": "A",
+      "explanation": "Action in progress until a future moment, emphasizing duration."
+    },
+    {
+      "question": "Formula for future perfect continuous: subject + will have been + _____.",
+      "options": [
+        "A. Past participle",
+        "B. Base verb",
+        "C. Verb-ing",
+        "D. Verb-ed"
+      ],
+      "correct": "C",
+      "explanation": "Subject + will have been + verb-ing."
+    },
+    {
+      "question": "The lesson mentions a free PDF with what?",
+      "options": [
+        "A. Only verb tenses",
+        "B. All verb tenses, examples, exceptions, and common irregular verbs",
+        "C. Just examples",
+        "D. Course information only"
+      ],
+      "correct": "B",
+      "explanation": "The PDF has all tenses, examples, summaries of exceptions, and common irregular verbs."
+    }
+  ]
+};
+
+        let shuffledQuestions = [];
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let selectedAnswer = null;
+        let currentCorrectLetter = '';
+
+        function shuffle(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        function startQuiz() {
+            shuffledQuestions = shuffle([...quizData.questions]);
+            document.getElementById('start-btn').style.display = 'none';
+            document.getElementById('quiz-container').style.display = 'block';
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            const q = shuffledQuestions[currentQuestionIndex];
+            document.getElementById('question').textContent = `${currentQuestionIndex + 1}. ${q.question}`;
+            const optionsDiv = document.getElementById('options');
+            optionsDiv.innerHTML = '';
+
+            const letters = ['A', 'B', 'C', 'D'];
+            const optionTexts = q.options.map(o => o.substring(3).trim());
+            const originalCorrectIndex = letters.indexOf(q.correct);
+            const correctText = optionTexts[originalCorrectIndex];
+
+            shuffle(optionTexts);
+
+            const newCorrectIndex = optionTexts.indexOf(correctText);
+            currentCorrectLetter = letters[newCorrectIndex];
+
+            for (let i = 0; i < letters.length; i++) {
+                const label = document.createElement('label');
+                const input = document.createElement('input');
+                input.type = 'radio';
+                input.name = 'answer';
+                input.value = letters[i];
+                input.onclick = () => selectedAnswer = letters[i];
+                label.appendChild(input);
+                label.appendChild(document.createTextNode(` ${letters[i]}. ${optionTexts[i]}`));
+                optionsDiv.appendChild(label);
+            }
+
+            document.getElementById('submit-btn').style.display = 'block';
+            document.getElementById('feedback').innerHTML = '';
+            document.getElementById('next-btn').style.display = 'none';
+            selectedAnswer = null;
+        }
+
+        function submitAnswer() {
+            if (!selectedAnswer) {
+                alert('Please select an answer!');
+                return;
+            }
+
+            const feedbackDiv = document.getElementById('feedback');
+            const isCorrect = selectedAnswer === currentCorrectLetter;
+            if (isCorrect) {
+                score++;
+                feedbackDiv.className = 'correct';
+                feedbackDiv.textContent = 'Correct! ';
+            } else {
+                feedbackDiv.className = 'incorrect';
+                feedbackDiv.textContent = `Incorrect. The correct answer is ${currentCorrectLetter}. `;
+            }
+            const q = shuffledQuestions[currentQuestionIndex];
+            feedbackDiv.textContent += q.explanation;
+
+            document.getElementById('submit-btn').style.display = 'none';
+            document.getElementById('next-btn').style.display = 'block';
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < shuffledQuestions.length) {
+                loadQuestion();
+            } else {
+                showResults();
+            }
+        }
+
+        function showResults() {
+            document.getElementById('quiz-container').style.display = 'none';
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.style.display = 'block';
+            resultsDiv.innerHTML = `<h2>Your Score: ${score} / ${shuffledQuestions.length}</h2>`;
+            const restartBtn = document.createElement('button');
+            restartBtn.textContent = 'Restart Quiz';
+            restartBtn.onclick = restartQuiz;
+            resultsDiv.appendChild(restartBtn);
+        }
+
+        function restartQuiz() {
+            currentQuestionIndex = 0;
+            score = 0;
+            document.getElementById('results').style.display = 'none';
+            document.getElementById('start-btn').style.display = 'block';
+        }
+
+        document.getElementById('start-btn').onclick = startQuiz;
+        document.getElementById('submit-btn').onclick = submitAnswer;
+        document.getElementById('next-btn').onclick = nextQuestion;
+    </script>
+</body>
+</html>
